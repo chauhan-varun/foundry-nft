@@ -5,6 +5,11 @@ import {DeployVibeNft} from "script/DeployVibeNft.s.sol";
 import {VibeNft} from "src/VibeNft.sol";
 import {Test, console2} from "forge-std/Test.sol";
 
+/**
+ * @title VibeNftTest
+ * @notice Test suite for the VibeNft contract
+ * @dev Tests all major functionality of the VibeNft contract
+ */
 contract VibeNftTest is Test {
     string public s_smiley;
     string public s_wink;
@@ -13,6 +18,7 @@ contract VibeNftTest is Test {
 
     VibeNft public vibeNft;
     address public USER = makeAddr("user");
+    address public ANOTHER_USER = makeAddr("anotherUser");
 
     function setUp() external {
         DeployVibeNft deployVibeNft = new DeployVibeNft();
@@ -35,5 +41,111 @@ contract VibeNftTest is Test {
         vm.prank(USER);
         vibeNft.changeVibe(0);
         assertEq(vibeNft.tokenURI(0), WINK_JSON_URI);
+    }
+
+    /**
+     * @notice Tests that minting increments the token counter properly
+     */
+    function testMintIncrementsTokenCounter() public {
+        vm.prank(USER);
+        vibeNft.mintNft();
+        
+        vm.prank(ANOTHER_USER);
+        vibeNft.mintNft();
+        
+        // Verify token ownership
+        assertEq(vibeNft.ownerOf(0), USER);
+        assertEq(vibeNft.ownerOf(1), ANOTHER_USER);
+    }
+
+    /**
+     * @notice Tests that a non-owner cannot change the vibe of someone else's NFT
+     */
+    function testCannotChangeVibeIfNotOwner() public {
+        // USER mints an NFT
+        vm.prank(USER);
+        vibeNft.mintNft();
+        
+        // ANOTHER_USER tries to change the vibe and should fail
+        vm.prank(ANOTHER_USER);
+        vm.expectRevert(VibeNft.VibeNft__NotApproved.selector);
+        vibeNft.changeVibe(0);
+    }
+
+    /**
+     * @notice Tests that an approved address can change the vibe
+     */
+    function testApprovedCanChangeVibe() public {
+        // USER mints an NFT and approves ANOTHER_USER
+        vm.startPrank(USER);
+        vibeNft.mintNft();
+        vibeNft.approve(ANOTHER_USER, 0);
+        vm.stopPrank();
+        
+        // ANOTHER_USER should be able to change the vibe
+        vm.prank(ANOTHER_USER);
+        vibeNft.changeVibe(0);
+        
+        // Verify the vibe was changed
+        assertEq(vibeNft.tokenURI(0), WINK_JSON_URI);
+    }
+
+    /**
+     * @notice Tests that changing vibe toggles between states
+     */
+    function testChangeVibeTogglesBetweenStates() public {
+        // Initial mint and URI
+        vm.prank(USER);
+        vibeNft.mintNft();
+        string memory initialUri = vibeNft.tokenURI(0);
+        
+        // First change (should be wink)
+        vm.prank(USER);
+        vibeNft.changeVibe(0);
+        assertEq(vibeNft.tokenURI(0), WINK_JSON_URI);
+        
+        // Second change (should be back to smile)
+        vm.prank(USER);
+        vibeNft.changeVibe(0);
+        assertEq(vibeNft.tokenURI(0), initialUri);
+    }
+    
+    /**
+     * @notice Tests that querying a non-existent token URI reverts
+     */
+    function testNonExistentTokenUriReverts() public {
+        uint256 nonExistentTokenId = 999;
+        vm.expectRevert();
+        vibeNft.tokenURI(nonExistentTokenId);
+    }
+    
+    /**
+     * @notice Tests multiple mints and vibe changes
+     */
+    function testMultipleMintsAndChanges() public {
+        // Mint several tokens to different users
+        vm.prank(USER);
+        vibeNft.mintNft(); // Token ID 0
+        
+        vm.prank(ANOTHER_USER);
+        vibeNft.mintNft(); // Token ID 1
+        
+        vm.prank(USER);
+        vibeNft.mintNft(); // Token ID 2
+        
+        // Change vibes on token 0 and 2 (owned by USER)
+        vm.startPrank(USER);
+        vibeNft.changeVibe(0);
+        vibeNft.changeVibe(2);
+        vm.stopPrank();
+        
+        // Change vibe on token 1 (owned by ANOTHER_USER)
+        vm.prank(ANOTHER_USER);
+        vibeNft.changeVibe(1);
+        
+        // Verify all tokens have wink vibe
+        assertEq(vibeNft.tokenURI(0), WINK_JSON_URI);
+        assertEq(vibeNft.tokenURI(1), WINK_JSON_URI);
+        assertEq(vibeNft.tokenURI(2), WINK_JSON_URI);
     }
 }
