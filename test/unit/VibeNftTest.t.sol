@@ -15,10 +15,12 @@ contract VibeNftTest is Test {
     string public s_wink;
     string public constant WINK_JSON_URI =
         "data:application/json;base64,eyJuYW1lIjogIlZpYmVOZnQiLCAiZGVzY3JpcHRpb24iOiAiQW4gTkZUIHRoYXQgcmVmbGVjdHMgeW91ciB2aWJlIiwgImF0dHJpYnV0ZXMiOiBbeyJ0cmFpdF90eXBlIjogIlZpYmUiLCAidmFsdWUiOiAiMTAwIn1dLCAiaW1hZ2UiOiAiZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQRDk0Yld3Z2RtVnljMmx2YmowaU1TNHdJaUJsYm1OdlpHbHVaejBpYVhOdkxUZzROVGt0TVNJL1BnMEtQQ0V0TFNCVmNHeHZZV1JsWkNCMGJ6b2dVMVpISUZKbGNHOHNJSGQzZHk1emRtZHlaWEJ2TG1OdmJTd2dSMlZ1WlhKaGRHOXlPaUJUVmtjZ1VtVndieUJOYVhobGNpQlViMjlzY3lBdExUNE5DandoUkU5RFZGbFFSU0J6ZG1jZ1VGVkNURWxESUNJdEx5OVhNME12TDBSVVJDQlRWa2NnTVM0eEx5OUZUaUlnSW1oMGRIQTZMeTkzZDNjdWR6TXViM0puTDBkeVlYQm9hV056TDFOV1J5OHhMakV2UkZSRUwzTjJaekV4TG1SMFpDSStEUW84YzNabklHWnBiR3c5SWlNd01EQXdNREFpSUdobGFXZG9kRDBpT0RBd2NIZ2lJSGRwWkhSb1BTSTRNREJ3ZUNJZ2RtVnljMmx2YmowaU1TNHhJaUJwWkQwaVEyRndZVjh4SWlCNGJXeHVjejBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TWpBd01DOXpkbWNpSUhodGJHNXpPbmhzYVc1clBTSm9kSFJ3T2k4dmQzZDNMbmN6TG05eVp5OHhPVGs1TDNoc2FXNXJJaUFOQ2drZ2RtbGxkMEp2ZUQwaU1DQXdJREk1TlM0NU9UWWdNamsxTGprNU5pSWdlRzFzT25Od1lXTmxQU0p3Y21WelpYSjJaU0krRFFvOFp6NE5DZ2s4Y0dGMGFDQmtQU0pOTVRRM0xqazVPQ3d3UXpZMkxqTTVNaXd3TERBc05qWXVNemt5TERBc01UUTNMams1T0dNd0xEZ3hMall3Tml3Mk5pNHpPVElzTVRRM0xqazVPQ3d4TkRjdU9UazRMREUwTnk0NU9UaGpPREV1TmpBMkxEQXNNVFEzTGprNU9DMDJOaTR6T1RJc01UUTNMams1T0MweE5EY3VPVGs0RFFvSkNVTXlPVFV1T1RrMkxEWTJMak01TWl3eU1qa3VOakEwTERBc01UUTNMams1T0N3d2VpQk5NVFEzTGprNU9Dd3lOemt1T1RrMll5MHpOaTR5TlRjc01DMDJPUzR4TkRNdE1UUXVOamsyTFRrekxqQXlNeTB6T0M0ME5BMEtDUWxqTFRrdU5UTTJMVGt1TkRneUxURTNMall6TVMweU1DNDBNUzB5TXk0NU16UXRNekl1TkRKRE1qRXVORFF5TERFNU1DNDRORGNzTVRZc01UY3dMakEwTnl3eE5pd3hORGN1T1RrNFF6RTJMRGMxTGpJeE5DdzNOUzR5TVRRc01UWXNNVFEzTGprNU9Dd3hOZzBLQ1Fsak16UXVOVEl6TERBc05qVXVPVGczTERFekxqTXlPQ3c0T1M0MU16TXNNelV1TVRBeVl6RXlMakl3T0N3eE1TNHlPRGdzTWpJdU1qZzVMREkwTGpnME5Dd3lPUzQxTlRnc016a3VPVGsyWXpndU1qY3NNVGN1TWpNNUxERXlMamt3Tnl3ek5pNDFNemdzTVRJdU9UQTNMRFUyTGprTkNna0pRekkzT1M0NU9UWXNNakl3TGpjNE1pd3lNakF1TnpneUxESTNPUzQ1T1RZc01UUTNMams1T0N3eU56a3VPVGsyZWlJdlBnMEtDVHhqYVhKamJHVWdZM2c5SWpFNU55NDBPVGNpSUdONVBTSXhNVFV1T1RrNElpQnlQU0l4TmlJdlBnMEtDVHh3WVhSb0lHUTlJazA1T1M0MU9ETXNNVEl3TGpVNE1VdzVPUzQxT0RNc01USXdMalU0TVdNMUxqUTJPQ3d3TERFd0xqUXdOQ3d5TGpZMU5Td3hNeTR5TURjc055NHhNREZzTVRNdU5UTTFMVGd1TXpJMVl5MDFMamMxTFRrdU1USXhMVEUxTGpjME55MHhOQzR6TmkweU5pNDNOQzB4TkM0ek5nMEtDUWxqTFRBdU1EQXhMREF0TUM0d01ERXNNQzB3TGpBd01Td3dZeTB4TUM0NU9UUXNNQzB5TUM0NU9UTXNOUzR5TXpndE1qWXVOelEwTERFMExqTTJiREV6TGpVek15dzRMalF5T1VNNE9TNHhOemdzTVRJekxqTTBNU3c1TkM0eE1UWXNNVEl3TGpVNE1TdzVPUzQxT0RNc01USXdMalU0TVhvaUx6NE5DZ2s4Y0dGMGFDQmtQU0pOTVRRNExqSTNPQ3d5TXpBdU5qSTRZek11TkRRekxEQXNOaTQ1TURJdE1DNHhPVFVzTVRBdU16WXlMVEF1TlRrMVl6STJMamsxT1MwekxqRXdPU3cxTVM0NE9EWXRNVGd1TmpNc05qWXVOamMzTFRReExqVXhPR3d0TVRNdU5ETTRMVGd1TmpnMERRb0pDV010TVRJdU1qSTFMREU0TGpreE5TMHpNaTQ0TVRNc016RXVOelF0TlRVdU1EY3pMRE0wTGpNd09HTXRNall1T1RBMkxETXVNVEV0TlRNdU56ZzVMVGd1TmpjekxUWTVMamcxTkMwek1DNHlNMk0wTGpjeU5TMDNMakV4TWl3MkxqUXhNaTB4TlM0M056Z3NOQzQxTURZdE1qUXVNVGtOQ2drSmJDMHhOUzQyTURRc015NDFNelZqTVM0eE5qRXNOUzR4TWpndE1DNDBOVE1zTVRBdU5EazNMVFF1TXpFNUxERTBMak0yTTJNdE15NDROallzTXk0NE5qVXRPUzR5TXpNc05TNDBOemd0TVRRdU16VTVMRFF1TXpFM2JDMHpMalV6Tnl3eE5TNDJNRFFOQ2drSll6SXVNamcwTERBdU5URTVMRFF1TlRnM0xEQXVOemN4TERZdU9EY3pMREF1TnpjeFl6VXVNRFkyTERBc01UQXVNRFF6TFRFdU1qVXNNVFF1TlRReUxUTXVOakl6UXpreUxqUTRNeXd5TVRjdU1qVXpMREV4T1M0NE16RXNNak13TGpZeU9Dd3hORGd1TWpjNExESXpNQzQyTWpoNklpOCtEUW84TDJjK0RRbzhMM04yWno0PSJ9";
+    string public smileJsonUri; // Will store the smile JSON URI for comparison
 
     VibeNft public vibeNft;
     address public USER = makeAddr("user");
     address public ANOTHER_USER = makeAddr("anotherUser");
+    address public OPERATOR = makeAddr("operator");
 
     function setUp() external {
         DeployVibeNft deployVibeNft = new DeployVibeNft();
@@ -27,6 +29,11 @@ contract VibeNftTest is Test {
         string memory wink = vm.readFile("./img/wink.svg");
         s_smiley = deployVibeNft.svgToBase64(smiley);
         s_wink = deployVibeNft.svgToBase64(wink);
+        
+        // Mint a token and store its URI for later use
+        vm.prank(USER);
+        vibeNft.mintNft();
+        smileJsonUri = vibeNft.tokenURI(0);
     }
 
     function testTokenUri() public {
@@ -54,8 +61,8 @@ contract VibeNftTest is Test {
         vibeNft.mintNft();
         
         // Verify token ownership
-        assertEq(vibeNft.ownerOf(0), USER);
-        assertEq(vibeNft.ownerOf(1), ANOTHER_USER);
+        assertEq(vibeNft.ownerOf(1), USER);
+        assertEq(vibeNft.ownerOf(2), ANOTHER_USER);
     }
 
     /**
@@ -114,9 +121,8 @@ contract VibeNftTest is Test {
      * @notice Tests that querying a non-existent token URI reverts
      */
     function testNonExistentTokenUriReverts() public {
-        uint256 nonExistentTokenId = 999;
         vm.expectRevert();
-        vibeNft.tokenURI(nonExistentTokenId);
+        vibeNft.tokenURI(999);
     }
     
     /**
@@ -125,27 +131,135 @@ contract VibeNftTest is Test {
     function testMultipleMintsAndChanges() public {
         // Mint several tokens to different users
         vm.prank(USER);
-        vibeNft.mintNft(); // Token ID 0
-        
-        vm.prank(ANOTHER_USER);
         vibeNft.mintNft(); // Token ID 1
         
-        vm.prank(USER);
+        vm.prank(ANOTHER_USER);
         vibeNft.mintNft(); // Token ID 2
+        
+        vm.prank(USER);
+        vibeNft.mintNft(); // Token ID 3
         
         // Change vibes on token 0 and 2 (owned by USER)
         vm.startPrank(USER);
-        vibeNft.changeVibe(0);
-        vibeNft.changeVibe(2);
+        vibeNft.changeVibe(1);
+        vibeNft.changeVibe(3);
         vm.stopPrank();
         
         // Change vibe on token 1 (owned by ANOTHER_USER)
         vm.prank(ANOTHER_USER);
-        vibeNft.changeVibe(1);
+        vibeNft.changeVibe(2);
         
         // Verify all tokens have wink vibe
-        assertEq(vibeNft.tokenURI(0), WINK_JSON_URI);
         assertEq(vibeNft.tokenURI(1), WINK_JSON_URI);
+        assertEq(vibeNft.tokenURI(2), WINK_JSON_URI);
+        assertEq(vibeNft.tokenURI(3), WINK_JSON_URI);
+    }
+    
+    /**
+     * @notice Tests that an operator with setApprovalForAll can change vibe
+     * @dev This specifically tests the approval branch in changeVibe
+     */
+    function testOperatorCanChangeVibe() public {
+        // USER mints an NFT
+        vm.prank(USER);
+        vibeNft.mintNft();
+        
+        // USER approves OPERATOR for all tokens
+        vm.prank(USER);
+        vibeNft.setApprovalForAll(OPERATOR, true);
+        
+        // OPERATOR should be able to change the vibe
+        vm.prank(OPERATOR);
+        vibeNft.changeVibe(0);
+        
+        // Verify the vibe was changed
+        assertEq(vibeNft.tokenURI(0), WINK_JSON_URI);
+    }
+    
+    /**
+     * @notice Tests that initial vibe is Smile after minting
+     * @dev This ensures default state is tested
+     */
+    function testInitialVibeIsSmile() public {
+        vm.prank(USER);
+        vibeNft.mintNft();
+        
+        // Initial state should be Smile (not Wink)
+        // Use keccak256 hash comparison for string comparison
+        bytes32 initialUriHash = keccak256(abi.encodePacked(vibeNft.tokenURI(1)));
+        bytes32 winkUriHash = keccak256(abi.encodePacked(WINK_JSON_URI));
+        
+        // Verify initial state is not wink
+        assertTrue(initialUriHash != winkUriHash);
+        
+        // Change to Wink
+        vm.prank(USER);
+        vibeNft.changeVibe(1);
+        
+        // Now it should match Wink
+        assertEq(vibeNft.tokenURI(1), WINK_JSON_URI);
+    }
+    
+    /**
+     * @notice Tests direct verification of smile URI
+     * @dev Tests the specific branch in tokenURI for smile URIs
+     */
+    function testSmileUri() public {
+        vm.prank(USER);
+        vibeNft.mintNft();
+        
+        // Get tokenURI for token 0 (should be smile)
+        string memory uri = vibeNft.tokenURI(0);
+        
+        // Verify smile URI matches expected pattern
+        bytes32 uriHash = keccak256(abi.encodePacked(uri));
+        bytes32 winkUriHash = keccak256(abi.encodePacked(WINK_JSON_URI));
+        
+        // Ensure the URI is not the wink URI
+        assertTrue(uriHash != winkUriHash);
+        
+        // Now change vibe and verify it's different
+        vm.prank(USER);
+        vibeNft.changeVibe(0);
+        
+        string memory newUri = vibeNft.tokenURI(0);
+        bytes32 newUriHash = keccak256(abi.encodePacked(newUri));
+        
+        // URI should have changed
+        assertTrue(uriHash != newUriHash);
+        assertEq(newUri, WINK_JSON_URI);
+    }
+    
+    /**
+     * @notice Tests all approval paths for changing vibe
+     */
+    function testAllApprovalPaths() public {
+        // Mint tokens for different approval scenarios
+        vm.startPrank(USER);
+        vibeNft.mintNft(); // Token 0 - will be used by owner directly
+        vibeNft.mintNft(); // Token 1 - will use approved address
+        vibeNft.mintNft(); // Token 2 - will use operator approval
+        vm.stopPrank();
+        
+        // 1. Owner path
+        vm.prank(USER);
+        vibeNft.changeVibe(0);
+        assertEq(vibeNft.tokenURI(0), WINK_JSON_URI);
+        
+        // 2. Approved address path
+        vm.prank(USER);
+        vibeNft.approve(ANOTHER_USER, 1);
+        
+        vm.prank(ANOTHER_USER);
+        vibeNft.changeVibe(1);
+        assertEq(vibeNft.tokenURI(1), WINK_JSON_URI);
+        
+        // 3. Operator path
+        vm.prank(USER);
+        vibeNft.setApprovalForAll(OPERATOR, true);
+        
+        vm.prank(OPERATOR);
+        vibeNft.changeVibe(2);
         assertEq(vibeNft.tokenURI(2), WINK_JSON_URI);
     }
 }
